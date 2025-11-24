@@ -104,11 +104,11 @@ if (!$giris_yapildi) {
                 id="productName"
                 required />
             </div>
-              <div class="mb-3">
-                <label class="form-label">Açıklama</label>
-                <input class="form-control" type="text" name="Aciklama" id="productDesc">
-              </div>
-              <div class="mb-3">
+            <div class="mb-3">
+              <label class="form-label">Açıklama</label>
+              <input class="form-control" type="text" name="Aciklama" id="productDesc">
+            </div>
+            <div class="mb-3">
               <label class="form-label">Fiyat</label>
               <input
                 type="number"
@@ -116,12 +116,15 @@ if (!$giris_yapildi) {
                 id="productPrice"
                 required />
             </div>
+            <div class="mb-3">
               <label class="form-label">Kategori</label>
-              <input
-                type="text"
-                class="form-control"
-                id="productCategory"
-                required />
+              <select id="productCategory" class="form-select">
+                <option value="">Kategori Seç</option>
+                <option value="elektronik">Elektronik</option>
+                <option value="giyim">Giyim</option>
+                <option value="ev_yasam">Ev & Yaşam</option>
+                <option value="aksesuar">Aksesuar</option>
+              </select>
             </div>
             <button type="submit" class="btn btn-primary">Kaydet</button>
           </form>
