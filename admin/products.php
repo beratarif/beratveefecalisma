@@ -66,6 +66,7 @@ if (!$giris_yapildi) {
         <tr>
           <th>Görsel</th>
           <th>İsim</th>
+          <th>Açıklama</th>
           <th>Fiyat</th>
           <th>Kategori</th>
           <th>İşlemler</th>
@@ -92,7 +93,7 @@ if (!$giris_yapildi) {
             <input type="hidden" id="productIndex" />
             <div class="mb-3">
               <label class="form-label">Ürün Görseli</label>
-              <input type="file" name="image" id="productImage">
+              <input class="form-control" type="file" name="image" id="productImage">
 
             </div>
             <div class="mb-3">
@@ -103,7 +104,11 @@ if (!$giris_yapildi) {
                 id="productName"
                 required />
             </div>
-            <div class="mb-3">
+              <div class="mb-3">
+                <label class="form-label">Açıklama</label>
+                <input class="form-control" type="text" name="Aciklama" id="productDesc">
+              </div>
+              <div class="mb-3">
               <label class="form-label">Fiyat</label>
               <input
                 type="number"
@@ -111,7 +116,6 @@ if (!$giris_yapildi) {
                 id="productPrice"
                 required />
             </div>
-            <div class="mb-3">
               <label class="form-label">Kategori</label>
               <input
                 type="text"
@@ -130,14 +134,16 @@ if (!$giris_yapildi) {
   <script>
     // Mock ürünler
     let products = [{
-        image: "https://via.placeholder.com/60",
+        image: "../img/cocuk_fotograf_makinesi.webp",
         name: "Ürün 1",
+        desc: "deneme card",
         price: 100,
         category: "Kategori A"
       },
       {
-        image: "https://via.placeholder.com/60",
+        image: "../img/mug.jpeg",
         name: "Ürün 2",
+        des: "deneme",
         price: 200,
         category: "Kategori B"
       }
@@ -155,8 +161,9 @@ if (!$giris_yapildi) {
       products.forEach((p, i) => {
         productsTableBody.innerHTML += `
           <tr>
-            <td><img src="${p.image}" width="60"></td>
+            <td><img src="${p.image}" width="100"></td>
             <td>${p.name}</td>
+            <td>${p.desc}</td>
             <td>${p.price} ₺</td>
             <td>${p.category}</td>
             <td>
@@ -172,8 +179,9 @@ if (!$giris_yapildi) {
       const p = products[index];
       document.getElementById('modalTitle').textContent = "Ürün Düzenle";
       document.getElementById('productIndex').value = index;
-      document.getElementById('productImage').value = p.image;
+      document.getElementById('productImage').value;
       document.getElementById('productName').value = p.name;
+      document.getElementById('productDesc').value = p.desc;
       document.getElementById('productPrice').value = p.price;
       document.getElementById('productCategory').value = p.category;
       productModal.show();
@@ -200,6 +208,7 @@ if (!$giris_yapildi) {
       const newProduct = {
         image: "https://via.placeholder.com/60",
         name: document.getElementById('productName').value,
+        desc: document.getElementById('productDesc').value,
         price: document.getElementById('productPrice').value,
         category: document.getElementById('productCategory').value,
       };
