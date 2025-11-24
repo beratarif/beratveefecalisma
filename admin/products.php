@@ -64,6 +64,7 @@ if (!$giris_yapildi) {
     <table class="table table-bordered">
       <thead class="table-dark">
         <tr>
+          <th>Görsel</th>
           <th>İsim</th>
           <th>Fiyat</th>
           <th>Kategori</th>
@@ -71,13 +72,6 @@ if (!$giris_yapildi) {
         </tr>
       </thead>
       <tbody id="productsTableBody">
-        <td>Ürün adı</td>
-        <td>Ürün fiyatı</td>
-        <td>Ürün kategorisi</td>
-        <td>
-          <button class="btn btn-sm btn-warning me-1" onclick="editProduct">Düzenle</button>
-          <button class="btn btn-sm btn-danger" onclick="deleteProduct">Sil</button>
-        </td><!-- Ürünler buraya JS ile gelecek -->
       </tbody>
     </table>
   </div>
@@ -96,6 +90,11 @@ if (!$giris_yapildi) {
         <div class="modal-body">
           <form id="productForm">
             <input type="hidden" id="productIndex" />
+            <div class="mb-3">
+              <label class="form-label">Ürün Görseli</label>
+              <input type="file" name="image" id="productImage">
+
+            </div>
             <div class="mb-3">
               <label class="form-label">Ürün İsmi</label>
               <input
@@ -127,8 +126,98 @@ if (!$giris_yapildi) {
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="js/products.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Mock ürünler
+    let products = [{
+        image: "https://via.placeholder.com/60",
+        name: "Ürün 1",
+        price: 100,
+        category: "Kategori A"
+      },
+      {
+        image: "https://via.placeholder.com/60",
+        name: "Ürün 2",
+        price: 200,
+        category: "Kategori B"
+      }
+    ];
+
+    const productsTableBody = document.getElementById('productsTableBody');
+
+    const productModalEl = document.getElementById("productModal");
+    const productModal = new bootstrap.Modal(productModalEl);
+
+    const productForm = document.getElementById('productForm');
+
+    function renderProducts() {
+      productsTableBody.innerHTML = "";
+      products.forEach((p, i) => {
+        productsTableBody.innerHTML += `
+          <tr>
+            <td><img src="${p.image}" width="60"></td>
+            <td>${p.name}</td>
+            <td>${p.price} ₺</td>
+            <td>${p.category}</td>
+            <td>
+              <button class="btn btn-warning btn-sm me-1" onclick="editProduct(${i})">Düzenle</button>
+              <button class="btn btn-danger btn-sm" onclick="deleteProduct(${i})">Sil</button>
+            </td>
+          </tr>
+        `;
+      });
+    }
+
+    function editProduct(index) {
+      const p = products[index];
+      document.getElementById('modalTitle').textContent = "Ürün Düzenle";
+      document.getElementById('productIndex').value = index;
+      document.getElementById('productImage').value = p.image;
+      document.getElementById('productName').value = p.name;
+      document.getElementById('productPrice').value = p.price;
+      document.getElementById('productCategory').value = p.category;
+      productModal.show();
+    }
+
+    function deleteProduct(index) {
+      if (confirm("Silinsin mi?")) {
+        products.splice(index, 1);
+        renderProducts();
+      }
+    }
+
+    document.getElementById('addProductBtn').addEventListener('click', () => {
+      productForm.reset();
+      document.getElementById('productIndex').value = "";
+      document.getElementById('modalTitle').textContent = "Ürün Ekle";
+      productModal.show();
+    });
+
+    productForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const index = document.getElementById('productIndex').value;
+
+      const newProduct = {
+        image: "https://via.placeholder.com/60",
+        name: document.getElementById('productName').value,
+        price: document.getElementById('productPrice').value,
+        category: document.getElementById('productCategory').value,
+      };
+
+      if (index === "") {
+        products.push(newProduct);
+      } else {
+        products[index] = newProduct;
+      }
+
+      productModal.hide();
+      renderProducts();
+    });
+
+    // Sayfa açıldığında listele
+    renderProducts();
+  </script>
+
 </body>
 
 </html>
