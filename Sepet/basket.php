@@ -186,7 +186,6 @@
               <p class="card-text text-muted">${u.aciklama}</p>
               <div class="product-info">
               <p class="price fw-bold fs-5 mb-1">₺${u.fiyat}</p>
-              <p class="stock text-muted small mt-2">12 adet</p>
               </div>
               <button class="btn btn-primary w-100 sepete-ekle">Sepete Ekle</button>
             </div>

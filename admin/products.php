@@ -67,7 +67,6 @@ if (!$giris_yapildi) {
           <th>İsim</th>
           <th>Fiyat</th>
           <th>Kategori</th>
-          <th>Stok</th>
           <th>İşlemler</th>
         </tr>
       </thead>
@@ -75,7 +74,6 @@ if (!$giris_yapildi) {
         <td>Ürün adı</td>
         <td>Ürün fiyatı</td>
         <td>Ürün kategorisi</td>
-        <td>Ürün Stoğu</td>
         <td>
           <button class="btn btn-sm btn-warning me-1" onclick="editProduct">Düzenle</button>
           <button class="btn btn-sm btn-danger" onclick="deleteProduct">Sil</button>
@@ -120,14 +118,6 @@ if (!$giris_yapildi) {
                 type="text"
                 class="form-control"
                 id="productCategory"
-                required />
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Stok</label>
-              <input
-                type="number"
-                class="form-control"
-                id="productStock"
                 required />
             </div>
             <button type="submit" class="btn btn-primary">Kaydet</button>
