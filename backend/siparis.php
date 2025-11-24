@@ -8,7 +8,7 @@ $kullanici_id = $kullanici['id'];
 
 switch ($_GET['islem']) {
     case 'getir':
-        $siparisler_getir = $pdo->prepare('SELECT s.siparis_id, k.ad_soyad, s.tutar, s.durum FROM siparisler s INNER JOIN kullanicilar k ON s.kullanici_id = k.kullanici_id');
+        $siparisler_getir = $pdo->prepare('SELECT s.siparis_id, k.ad_soyad, s.tutar, s.durum FROM siparisler s INNER JOIN kullanicilar k ON s.kullanici_id = k.kullanici_id ORDER BY durum');
         $siparisler_getir->execute();
 
         echo json_encode($siparisler_getir->fetchAll(PDO::FETCH_ASSOC));

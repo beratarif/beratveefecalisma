@@ -83,7 +83,7 @@ if (!$giris_yapildi) {
       <div class="col-md-4 mb-3">
         <div class="card text-center shadow-sm p-3">
           <h5 class="card-title">Toplam Gelir</h5>
-          <p class="card-text display-6" id="totalRevenue">-</p>
+          <p class="card-text display-6 gelir" id="totalRevenue">-</p>
         </div>
       </div>
     </div>
@@ -99,6 +99,7 @@ if (!$giris_yapildi) {
 
         stats_row.querySelector(".kullanicilar").innerHTML = `${dashboard.kullanicilar}`;
         stats_row.querySelector(".siparisler").innerHTML = `${dashboard.siparisler}`;
+        stats_row.querySelector(".gelir").innerHTML = `${dashboard.gelir.toFixed(2)} ₺`;
 
       } catch (err) {
         console.error(`hata: ${err}`);

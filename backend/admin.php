@@ -11,7 +11,16 @@ switch ($_GET['islem']) {
         $siparisleri_getir = $pdo->query("SELECT COUNT(*) FROM siparisler WHERE durum != 'Tamamlandı'");
         $siparisler = $siparisleri_getir->fetchColumn();
 
-        echo json_encode(['kullanicilar' => $kullanicilar, 'siparisler' => $siparisler]);
+        $gelir_getir = $pdo->prepare("SELECT tutar FROM siparisler WHERE durum = 'Tamamlandı'");
+        $gelir_getir->execute();
+        $tutarlar = $gelir_getir->fetchAll(PDO::FETCH_ASSOC);
+
+        $gelir = 0;
+        foreach ($tutarlar as $tutar) {
+            $gelir += $tutar['tutar'];
+        }
+
+        echo json_encode(['kullanicilar' => $kullanicilar, 'siparisler' => $siparisler, 'gelir' => $gelir]);
         break;
 }
 ?>
