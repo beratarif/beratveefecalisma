@@ -93,7 +93,7 @@ if (!$giris_yapildi) {
             <input type="hidden" id="productIndex" />
             <div class="mb-3">
               <label class="form-label">Ürün Görseli</label>
-              <input class="form-control" type="file" name="image" id="productImage">
+              <input class="form-control" type="file" name="image" multiple accept="image/*" id="productImage">
 
             </div>
             <div class="mb-3">
@@ -137,7 +137,7 @@ if (!$giris_yapildi) {
   <script>
     // Mock ürünler
     let products = [{
-        image: "../img/cocuk_fotograf_makinesi.webp",
+        image: "../img/",
         name: "Ürün 1",
         desc: "deneme card",
         price: 100,
@@ -151,6 +151,7 @@ if (!$giris_yapildi) {
         category: "Kategori B"
       }
     ];
+
 
     const productsTableBody = document.getElementById('productsTableBody');
 
@@ -208,8 +209,15 @@ if (!$giris_yapildi) {
       e.preventDefault();
       const index = document.getElementById('productIndex').value;
 
+      const fileInput = document.getElementById('productImage');
+      let image = "https://via.placeholder.com/60";
+
+      if (fileInput.files.length > 0) {
+        imageURL = URL.createObjectURL(fileInput.files[0]);
+      }
+
       const newProduct = {
-        image: "https://via.placeholder.com/60",
+        image: imageURL,
         name: document.getElementById('productName').value,
         desc: document.getElementById('productDesc').value,
         price: document.getElementById('productPrice').value,
