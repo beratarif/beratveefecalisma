@@ -1,9 +1,3 @@
-// let orders = [
-//   { id: 1, customer: "Ahmet Yılmaz", amount: 250, status: "Bekliyor" },
-//   { id: 2, customer: "Ayşe Demir", amount: 120, status: "Kargolandı" },
-//   { id: 3, customer: "Mehmet Kaya", amount: 400, status: "Tamamlandı" },
-// ];
-
 const tbody = document.getElementById("ordersTableBody");
 
 async function renderOrders() {
@@ -11,11 +5,11 @@ async function renderOrders() {
   const yanitJson = await yanit.json();
 
   tbody.innerHTML = "";
-  
+
   yanitJson.forEach(f => {
     tbody.innerHTML += `
       <tr>
-        <td>${f.siparis_id}</td>
+        <td style="cursor:pointer;" onclick=alert(${f.siparis_id}) >${f.siparis_id}</td>
         <td>${f.ad_soyad}</td>
         <td>${f.tutar} ₺</td>
         
@@ -54,5 +48,4 @@ async function updateStatus(index, newStatus) {
   
   renderOrders();
 }
-
 renderOrders();

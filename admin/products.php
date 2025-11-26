@@ -13,11 +13,8 @@ if (!$giris_yapildi) {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Panel - Ürünler</title>
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-    rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
-  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 </head>
 
 <body>
@@ -36,12 +33,8 @@ if (!$giris_yapildi) {
       </button>
       <?php if ($giris_yapildi): ?>
         <div class="dropdown">
-          <button
-            class="btn btn-outline-light btn-sm dropdown-toggle text-uppercase fw-semibold"
-            type="button"
-            id="userDropdown"
-            data-bs-toggle="dropdown"
-            aria-expanded="false">
+          <button class="btn btn-outline-light btn-sm dropdown-toggle text-uppercase fw-semibold" type="button"
+            id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
             <?php echo htmlspecialchars($yetkili['ad_soyad']); ?>
           </button>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
@@ -49,9 +42,7 @@ if (!$giris_yapildi) {
           </ul>
         </div>
       <?php else: ?>
-        <button
-          onclick="window.location.href='./index.html'"
-          class="btn btn-outline-light btn-sm">
+        <button onclick="window.location.href='./index.html'" class="btn btn-outline-light btn-sm">
           Giriş Yap
         </button>
       <?php endif; ?>
@@ -84,10 +75,7 @@ if (!$giris_yapildi) {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="modalTitle">Ürün Ekle</h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
           <form id="productForm">
@@ -161,19 +149,22 @@ if (!$giris_yapildi) {
 
     const productForm = document.getElementById('productForm');
 
-    function renderProducts() {
+    async function renderProducts() {
+      const yanit = await fetch(`../backend/urun.php?islem=admin_icin_urunler`);
+      const tum_urunler_json = await yanit.json();
+
       productsTableBody.innerHTML = "";
-      products.forEach((p, i) => {
+      tum_urunler_json.forEach(f => {
         productsTableBody.innerHTML += `
           <tr>
-            <td><img src="${p.image}" width="100"></td>
-            <td>${p.name}</td>
-            <td>${p.desc}</td>
-            <td>${p.price} ₺</td>
-            <td>${p.category}</td>
+            <td><img src="../${f.gorsel}" width="100"></td>
+            <td>${f.ad}</td>
+            <td>${f.aciklama}</td>
+            <td>${f.fiyat} ₺</td>
+            <td>${f.kategori}</td>
             <td>
-              <button class="btn btn-warning btn-sm me-1" onclick="editProduct(${i})">Düzenle</button>
-              <button class="btn btn-danger btn-sm" onclick="deleteProduct(${i})">Sil</button>
+              <button class="btn btn-warning btn-sm me-1" onclick="editProduct(${f.urun_id})">Düzenle</button>
+              <button class="btn btn-danger btn-sm" onclick="deleteProduct(${f.urun_id})">Sil</button>
             </td>
           </tr>
         `;
@@ -192,9 +183,9 @@ if (!$giris_yapildi) {
       productModal.show();
     }
 
-    function deleteProduct(index) {
+    async function deleteProduct(index) {
       if (confirm("Silinsin mi?")) {
-        products.splice(index, 1);
+        await fetch(`../backend/urun.php?islem=sil&urun_id=${index}`);
         renderProducts();
       }
     }
@@ -206,36 +197,55 @@ if (!$giris_yapildi) {
       productModal.show();
     });
 
-    productForm.addEventListener('submit', (e) => {
+
+
+
+
+
+
+
+
+    productForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const index = document.getElementById('productIndex').value;
 
       const fileInput = document.getElementById('productImage');
-      let image = "https://via.placeholder.com/60";
+
+      const form_data = new FormData();
+      form_data.append('islem', 'ekle');
 
       if (fileInput.files.length > 0) {
-        imageURL = URL.createObjectURL(fileInput.files[0]);
+        form_data.append('gorsel', fileInput.files[0]);
       }
 
-      const newProduct = {
-        image: imageURL,
-        name: document.getElementById('productName').value,
-        desc: document.getElementById('productDesc').value,
-        price: document.getElementById('productPrice').value,
-        category: document.getElementById('productCategory').value,
-      };
-
-      if (index === "") {
-        products.push(newProduct);
-      } else {
-        products[index] = newProduct;
-      }
+      form_data.append('ad', document.getElementById('productName').value);
+      form_data.append('aciklama', document.getElementById('productDesc').value);
+      form_data.append('fiyat', document.getElementById('productPrice').value);
+      form_data.append('kategori', document.getElementById('productCategory').value);
+          deleteProduct
+      await fetch("../backend/urun.php", {
+        method: "POST",
+        body: form_data
+      });
 
       productModal.hide();
       renderProducts();
     });
 
-    // Sayfa açıldığında listele
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // new php
     renderProducts();
   </script>
 
