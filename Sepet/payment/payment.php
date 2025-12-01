@@ -163,7 +163,6 @@
             });
         });
 
-        
         const cards = document.querySelectorAll(".payment-card");
     const formArea = document.getElementById("paymentFormArea");
 
@@ -222,7 +221,6 @@
         });
     });
     </script>
-x
 </body>
 
 </html>

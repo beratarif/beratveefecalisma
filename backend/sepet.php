@@ -101,6 +101,14 @@ switch ($_GET['islem']) {
         echo json_encode($sonuc);
         break;
     case 'sepet_bosalt':
+        $sepet_urunler_getir = $pdo->prepare('SELECT urun_id FROM siparisler WHERE kullanici_id = :kullanici_id');
+        
+
+
+
+
+
+
         $sepet_hesapla = $pdo->prepare('SELECT u.fiyat, s.adet FROM sepetler s INNER JOIN urunler u ON s.urun_id = u.urun_id WHERE s.kullanici_id = :kullanici_id');
         $sepet_hesapla->execute([':kullanici_id' => $kullanici_id]);
 
