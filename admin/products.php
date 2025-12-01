@@ -87,11 +87,7 @@ if (!$giris_yapildi) {
             </div>
             <div class="mb-3">
               <label class="form-label">Ürün İsmi</label>
-              <input
-                type="text"
-                class="form-control"
-                id="productName"
-                required />
+              <input type="text" class="form-control" id="productName" required />
             </div>
             <div class="mb-3">
               <label class="form-label">Açıklama</label>
@@ -99,11 +95,7 @@ if (!$giris_yapildi) {
             </div>
             <div class="mb-3">
               <label class="form-label">Fiyat</label>
-              <input
-                type="number"
-                class="form-control"
-                id="productPrice"
-                required />
+              <input type="number" class="form-control" id="productPrice" required />
             </div>
             <div class="mb-3">
               <label class="form-label">Kategori</label>
@@ -116,7 +108,7 @@ if (!$giris_yapildi) {
               </select>
             </div>
             <button type="submit" class="btn btn-primary" value="ekle">Kaydet</button>
-            <button type="submit" class="btn btn-primary" value="gunceller">Guncelle</button>
+            <button type="submit" class="btn btn-primary" value="guncelle">Güncelle</button>
           </form>
         </div>
       </div>
@@ -183,14 +175,6 @@ if (!$giris_yapildi) {
       productModal.show();
     });
 
-
-
-
-
-
-
-
-
     productForm.addEventListener('submit', async (e) => {
       e.preventDefault();
 
@@ -198,22 +182,36 @@ if (!$giris_yapildi) {
       const fileInput = document.getElementById('productImage');
 
       const form_data = new FormData();
-      form_data.append('islem', clickedBtn);
+      switch (clickedBtn) {
+        case 'ekle':
+          form_data.append('islem', 'ekle');
+          form_data.append('ad', document.getElementById('productName').value);
+          form_data.append('aciklama', document.getElementById('productDesc').value);
+          form_data.append('fiyat', document.getElementById('productPrice').value);
+          form_data.append('kategori', document.getElementById('productCategory').value);
 
-      const productId = document.getElementById('productId');
-      if(productId){
-        form_data.append('id ',productId.value);
+          if (fileInput.files.length > 0) {
+            form_data.append('gorsel', fileInput.files[0]);
+          }
+          break;
+
+        case 'guncelle':
+          form_data.append('islem', 'guncelle');
+          
+          const product_id = document.getElementById("productIndex").value;
+          form_data.append('urun_id', product_id);
+          form_data.append('ad', document.getElementById('productName').value);
+          form_data.append('aciklama', document.getElementById('productDesc').value);
+          form_data.append('fiyat', document.getElementById('productPrice').value);
+          form_data.append('kategori', document.getElementById('productCategory').value);
+
+          if (fileInput.files.length > 0) {
+            form_data.append('gorsel', fileInput.files[0]);
+          }
+          
+          break;
       }
 
-      if (fileInput.files.length > 0) {
-        form_data.append('gorsel', fileInput.files[0]);
-      }
-
-      form_data.append('ad', document.getElementById('productName').value);
-      form_data.append('aciklama', document.getElementById('productDesc').value);
-      form_data.append('fiyat', document.getElementById('productPrice').value);
-      form_data.append('kategori', document.getElementById('productCategory').value);
-      deleteProduct
       await fetch("../backend/urun.php", {
         method: "POST",
         body: form_data

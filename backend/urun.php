@@ -28,6 +28,32 @@ try {
                 } else {
                     die("Dosya yüklenemedi");
                 }
+                
+                break;
+            case 'guncelle':
+                $urun_id = $_POST['urun_id'];
+                $urun_ad = $_POST['ad'];
+                $urun_aciklama = $_POST['aciklama'];
+                $urun_fiyat = $_POST['fiyat'];
+                $urun_kategori = $_POST['kategori'];
+
+                if (isset($_FILES['gorsel'])) {
+                    $uploads_dir = "../img/";
+                    $tmp_name = $_FILES["gorsel"]["tmp_name"];
+                    $uzanti = pathinfo($_FILES["gorsel"]["name"], PATHINFO_EXTENSION);
+
+                    $yeniIsim = $ad . '.' . $uzanti;
+                }
+
+                $urun_guncelle = $pdo->prepare('UPDATE urunler SET ad = :urun_ad, aciklama = :urun_aciklama, fiyat = :urun_fiyat, kategori = :urun_kategori WHERE urun_id = :urun_id');
+                $urun_guncelle->execute([
+                    'urun_id' => $urun_id,
+                    'urun_ad' => $urun_ad,
+                    'urun_aciklama' => $urun_aciklama,
+                    'urun_fiyat' => $urun_fiyat,
+                    'urun_kategori' => $urun_kategori
+                ]);
+
                 break;
         }
     } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {

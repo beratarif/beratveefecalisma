@@ -144,7 +144,6 @@
         </p>
 
         <div class="product-price mb-4 product-price">999₺</div>
-        <h5 class="text-muted xxl mb-2">Stok: 12 adet</h5>
         <button class="btn btn-success btn-lg px-4 sepete-ekle">
           <i class="fa fa-solid fa-cart-shopping me-2"></i> Sepete Ekle
         </button>
