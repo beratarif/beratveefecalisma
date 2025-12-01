@@ -217,7 +217,7 @@ function SonrakiSayfayaGidebilirMi($sonraki_sayfa_urun_sayisi)
                             <div class="product-info">
               <p class="price fw-bold fs-5 mb-1">₺${u.fiyat}</p>
               </div>
-        <p class="mb-1 small">Stok: ${u.stok}</p>
+        <p class="mb-1 small">Tükendi</p>
 
         <button class="btn btn-primary w-100 sepete-ekle disabled">Sepete Ekle</button>
             </div>
@@ -225,10 +225,6 @@ function SonrakiSayfayaGidebilirMi($sonraki_sayfa_urun_sayisi)
         </div>
             `;
             }
-
-
-
-
           }
 
           for (const urunKart of document.querySelectorAll(".product-card")) {
