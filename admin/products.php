@@ -107,8 +107,8 @@ if (!$giris_yapildi) {
                 <option value="aksesuar">Aksesuar</option>
               </select>
             </div>
-            <button type="submit" class="btn btn-primary" value="ekle">Kaydet</button>
-            <button type="submit" class="btn btn-primary" value="guncelle">Güncelle</button>
+            <button type="submit" style="display: flex;" id="confirm" class="btn btn-primary" value="ekle">Kaydet</button>
+            <button type="submit" style="display: flex;" id="update" class="btn btn-primary" value="guncelle">Güncelle</button>
           </form>
         </div>
       </div>
@@ -138,11 +138,19 @@ if (!$giris_yapildi) {
             <td>${f.fiyat} ₺</td>
             <td>${f.kategori}</td>
             <td>
-              <button class="btn btn-warning btn-sm me-1" onclick="editProduct(${f.urun_id})">Düzenle</button>
+              <button class="btn btn-warning btn-sm me-1" id="edit" onclick="editProduct(${f.urun_id})">Düzenle</button>
               <button class="btn btn-danger btn-sm" onclick="deleteProduct(${f.urun_id})">Sil</button>
             </td>
           </tr>
         `;
+      });
+      document.getElementById('edit').addEventListener("click", () => {
+        productForm.reset();
+        document.getElementById('confirm').style.display = "none";
+        document.getElementById('update').style.display = "flex";
+        document.getElementById('productIndex').value = "";
+        document.getElementById('modalTitle').textContent = "Ürünü Güncelle";
+        productModal.show();
       });
     }
 
@@ -170,10 +178,16 @@ if (!$giris_yapildi) {
 
     document.getElementById('addProductBtn').addEventListener('click', () => {
       productForm.reset();
+      document.getElementById('update').style.display = "none";
+      document.getElementById('confirm').style.display = "flex";
       document.getElementById('productIndex').value = "";
       document.getElementById('modalTitle').textContent = "Ürün Ekle";
       productModal.show();
     });
+
+    // document.getElementById('edit').addEventListener("click", () => {
+
+    // });
 
     productForm.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -182,22 +196,27 @@ if (!$giris_yapildi) {
       const fileInput = document.getElementById('productImage');
 
       const form_data = new FormData();
+
       switch (clickedBtn) {
         case 'ekle':
+
           form_data.append('islem', 'ekle');
           form_data.append('ad', document.getElementById('productName').value);
           form_data.append('aciklama', document.getElementById('productDesc').value);
           form_data.append('fiyat', document.getElementById('productPrice').value);
           form_data.append('kategori', document.getElementById('productCategory').value);
 
+
+
           if (fileInput.files.length > 0) {
             form_data.append('gorsel', fileInput.files[0]);
           }
+
           break;
 
         case 'guncelle':
           form_data.append('islem', 'guncelle');
-          
+
           const product_id = document.getElementById("productIndex").value;
           form_data.append('urun_id', product_id);
           form_data.append('ad', document.getElementById('productName').value);
@@ -208,7 +227,7 @@ if (!$giris_yapildi) {
           if (fileInput.files.length > 0) {
             form_data.append('gorsel', fileInput.files[0]);
           }
-          
+
           break;
       }
 
@@ -220,22 +239,6 @@ if (!$giris_yapildi) {
       productModal.hide();
       renderProducts();
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // new repair
     renderProducts();
   </script>
 

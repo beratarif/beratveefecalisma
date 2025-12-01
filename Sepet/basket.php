@@ -187,6 +187,7 @@
               <div class="product-info">
               <p class="price fw-bold fs-5 mb-1">₺${u.fiyat}</p>
               </div>
+              <p class="mb-1 small">Stok: 12</p> 
               <button class="btn btn-primary w-100 sepete-ekle">Sepete Ekle</button>
             </div>
           </div>
