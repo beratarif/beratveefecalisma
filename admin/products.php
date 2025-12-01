@@ -83,7 +83,7 @@ if (!$giris_yapildi) {
             <div class="mb-3">
               <label class="form-label">Ürün Görseli</label>
               <input class="form-control" type="file" name="image" multiple accept="image/*" id="productImage">
-                  <img id="currentPreview" src="../${f.gorsel}" width="100" style>
+              <img id="currentPreview" src="../${f.gorsel}" width="100" style>
             </div>
             <div class="mb-3">
               <label class="form-label">Ürün İsmi</label>
@@ -115,7 +115,8 @@ if (!$giris_yapildi) {
                 <option value="aksesuar">Aksesuar</option>
               </select>
             </div>
-            <button type="submit" class="btn btn-primary">Kaydet</button>
+            <button type="submit" class="btn btn-primary" value="ekle">Kaydet</button>
+            <button type="submit" class="btn btn-primary" value="gunceller">Guncelle</button>
           </form>
         </div>
       </div>
@@ -124,8 +125,6 @@ if (!$giris_yapildi) {
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-
-
     const productsTableBody = document.getElementById('productsTableBody');
 
     const productModalEl = document.getElementById("productModal");
@@ -159,7 +158,7 @@ if (!$giris_yapildi) {
     async function editProduct(index) {
       const yanit = await fetch(`../backend/urun.php?islem=getir1&urun_id=${index}`);
       const yanit1Tane = await yanit.json();
-      const currentPreview = document.getElementById('currentPreview');      
+      const currentPreview = document.getElementById('currentPreview');
       document.getElementById('modalTitle').textContent = "Ürün Düzenle";
       document.getElementById('productIndex').value = index;
       document.getElementById('productName').value = yanit1Tane.ad;
@@ -195,10 +194,16 @@ if (!$giris_yapildi) {
     productForm.addEventListener('submit', async (e) => {
       e.preventDefault();
 
+      const clickedBtn = e.submitter.value;
       const fileInput = document.getElementById('productImage');
 
       const form_data = new FormData();
-      form_data.append('islem', 'ekle');
+      form_data.append('islem', clickedBtn);
+
+      const productId = document.getElementById('productId');
+      if(productId){
+        form_data.append('id ',productId.value);
+      }
 
       if (fileInput.files.length > 0) {
         form_data.append('gorsel', fileInput.files[0]);
@@ -208,7 +213,7 @@ if (!$giris_yapildi) {
       form_data.append('aciklama', document.getElementById('productDesc').value);
       form_data.append('fiyat', document.getElementById('productPrice').value);
       form_data.append('kategori', document.getElementById('productCategory').value);
-          deleteProduct
+      deleteProduct
       await fetch("../backend/urun.php", {
         method: "POST",
         body: form_data

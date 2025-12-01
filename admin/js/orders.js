@@ -6,7 +6,7 @@ async function renderOrders() {
 
   tbody.innerHTML = "";
 
-  yanitJson.forEach(f => {
+  yanitJson.forEach(f =>{
     tbody.innerHTML += `
       <tr>
         <td style="cursor:pointer;" onclick=alert(${f.siparis_id}) >${f.siparis_id}</td>
