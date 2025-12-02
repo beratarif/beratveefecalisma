@@ -13,13 +13,8 @@ try {
                 $fiyat = $_POST['fiyat'];
                 $kategori = $_POST['kategori'];
 
-                $kayitYolu = "";
-
-                $uploads_dir = "../img/";
-                $tmp_name = $_FILES["gorsel"]["tmp_name"];
                 $uzanti = pathinfo($_FILES["gorsel"]["name"], PATHINFO_EXTENSION);
-
-                $yeniIsim = $ad . '.' . $uzanti;
+                $yeniIsim = uniqid() . '.' . $uzanti;
 
                 if (move_uploaded_file($tmp_name, $uploads_dir . $yeniIsim)) {
                     $kayitYolu = "img/" . $yeniIsim;
