@@ -61,6 +61,7 @@ if (!$giris_yapildi) {
           <th>Açıklama</th>
           <th>Fiyat</th>
           <th>Kategori</th>
+          <th>Stok Adedi</th>
           <th>İşlemler</th>
         </tr>
       </thead>
@@ -96,6 +97,10 @@ if (!$giris_yapildi) {
             <div class="mb-3">
               <label class="form-label">Fiyat</label>
               <input type="number" class="form-control" id="productPrice" required />
+            </div>
+            <div class="mb-3">
+              <label>Stok adedi</label>
+              <input type="number" name="stok_adedi" id="stockNumber">
             </div>
             <div class="mb-3">
               <label class="form-label">Kategori</label>
@@ -137,6 +142,7 @@ if (!$giris_yapildi) {
             <td>${f.aciklama}</td>
             <td>${f.fiyat} ₺</td>
             <td>${f.kategori}</td>
+            <td>${f.stock}</td>
             <td>
               <button class="btn btn-warning btn-sm me-1" id="edit" onclick="editProduct(${f.urun_id})">Düzenle</button>
               <button class="btn btn-danger btn-sm" onclick="deleteProduct(${f.urun_id})">Sil</button>
